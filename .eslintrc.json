@@ -1,0 +1,153 @@
+{
+  "root": true,
+  "ignorePatterns": ["**/*"],
+  "plugins": [
+    "@nx",
+    "@typescript-eslint",
+    "unused-imports"
+  ],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {
+        "@nx/enforce-module-boundaries": [
+          "error",
+          {
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
+              {
+                "sourceTag": "scope:root",
+                "onlyDependOnLibsWithTags": [
+                  "scope:root"
+                ]
+              },
+              {
+                "sourceTag": "scope:common",
+                "onlyDependOnLibsWithTags": [
+                  "scope:common",
+                  "scope:root"
+                ]
+              },
+              {
+                "sourceTag": "scope:app",
+                "onlyDependOnLibsWithTags": [
+                  "scope:app",
+                  "scope:common",
+                  "scope:root"
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
+      "extends": [
+        "plugin:@nx/typescript",
+        "plugin:@nx/javascript"
+      ],
+      "rules": {
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-this-alias": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "no-multiple-empty-lines": 1,
+        "complexity": [
+          "error",
+          10
+        ],
+        "no-nested-ternary": "error",
+        "curly": [
+          "error",
+          "all"
+        ],
+        "max-depth": [
+          "error",
+          3
+        ],
+        "no-console": 2,
+        "@typescript-eslint/no-explicit-any": "warn",
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@mui/*/*/*"]
+          }
+        ],
+        "@typescript-eslint/no-empty-object-type": "off"
+      }
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
+      "env": {
+        "jest": true
+      },
+      "rules": {
+        "no-unused-vars": "off",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all",
+            "varsIgnorePattern": "^_",
+            "args": "after-used",
+            "argsIgnorePattern": "^_"
+          }
+        ],
+        "@typescript-eslint/camelcase": "off",
+        "@typescript-eslint/no-namespace": "off",
+        "@typescript-eslint/no-this-alias": "off",
+        "@typescript-eslint/no-empty-function": "off",
+        "no-multiple-empty-lines": 1,
+        "complexity": [
+          "error",
+          10
+        ],
+        "no-nested-ternary": "error",
+        "curly": [
+          "error",
+          "all"
+        ],
+        "max-depth": [
+          "error",
+          3
+        ],
+        "no-console": 2,
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-require-imports": "off"
+      }
+    }
+  ]
+}
