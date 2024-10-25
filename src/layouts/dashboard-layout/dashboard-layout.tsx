@@ -5,7 +5,7 @@ import { Outlet } from 'react-router-dom';
 export const DashboardLayout = () => {
   return (
     <MUIDashboardLayout>
-      <PageContainer>
+      <PageContainer breadcrumbs={[]}>
         <Outlet />
       </PageContainer>
     </MUIDashboardLayout>
