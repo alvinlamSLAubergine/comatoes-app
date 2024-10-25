@@ -1,11 +1,26 @@
-import { DashboardLayout } from '@toolpad/core/DashboardLayout';
+import { AppProvider } from '@toolpad/core';
+import { DashboardLayout } from './dashboard/layout';
+import { theme } from './theme';
+
+const DashboardLogo = () => (
+  <img
+    src='/comatoes.svg'
+    alt='logo'
+  />
+);
 
 function App() {
   return (
-    <DashboardLayout>
-      <div>TEST</div>
-    </DashboardLayout>
-  )
+    <AppProvider
+      theme={theme}
+      branding={{
+        logo: <DashboardLogo />,
+        title: 'Comatoes',
+      }}
+    >
+      <DashboardLayout />
+    </AppProvider>
+  );
 }
 
-export default App
+export default App;
