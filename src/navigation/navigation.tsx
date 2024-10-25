@@ -9,6 +9,7 @@ export const NAVIGATION: Navigation = [
   },
   {
     title: 'Test Page 1',
+    segment: 'test-page-1',
     icon: <TestPageOneIcon />,
   },
   {
