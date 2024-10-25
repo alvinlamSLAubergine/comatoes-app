@@ -5,9 +5,5 @@ export const theme = createTheme({
   palette: {
     primary: green,
     secondary: red,
-    text: {
-      primary: green[500],
-      secondary: red[500],
-    },
   },
 });
