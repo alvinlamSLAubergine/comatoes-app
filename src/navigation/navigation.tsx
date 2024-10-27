@@ -8,8 +8,8 @@ export const NAVIGATION: Navigation = [
     title: 'Dashboard',
   },
   {
-    title: 'Test Page 1',
-    segment: 'test-page-1',
+    title: 'Clients',
+    segment: 'clients',
     icon: <TestPageOneIcon />,
   },
   {
