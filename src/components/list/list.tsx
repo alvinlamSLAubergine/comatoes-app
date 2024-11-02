@@ -8,13 +8,17 @@ import ListItemText from '@mui/material/ListItemText';
 import { isValidElement, ReactNode } from 'react';
 
 interface ListItemProps {
+  index: number;
+  id?: string;
   avatar?: 'default' | string | ReactNode;
   primaryText?: string;
   secondaryText?: string;
+  clickable?: boolean;
+  onClick?: (id: string, index: number) => void;
 }
 
 interface ListProps {
-  listItems: ListItemProps[];
+  listItems: Omit<ListItemProps, 'index'>[];
 }
 
 export function List({ listItems }: ListProps) {
@@ -22,7 +26,8 @@ export function List({ listItems }: ListProps) {
     <MuiList>
       {listItems.map((item, index) => (
         <ListItem
-          key={index}
+          key={item.id || index}
+          index={index}
           {...item}
         />
       ))}
@@ -30,7 +35,15 @@ export function List({ listItems }: ListProps) {
   );
 }
 
-export function ListItem({ avatar, primaryText, secondaryText }: ListItemProps) {
+export function ListItem({
+  id,
+  index,
+  avatar,
+  primaryText,
+  secondaryText,
+  clickable = true,
+  onClick = () => {},
+}: ListItemProps) {
   let MAvatar = (
     <Avatar>
       <AvatarIcon
@@ -53,12 +66,20 @@ export function ListItem({ avatar, primaryText, secondaryText }: ListItemProps) 
   return (
     <MuiListItem>
       {avatar && <MuiListItemAvatar>{MAvatar}</MuiListItemAvatar>}
-      <MuiListItemButton>
+      {clickable && (
+        <MuiListItemButton onClick={() => onClick(id || '', index)}>
+          <ListItemText
+            primary={primaryText}
+            secondary={secondaryText}
+          />
+        </MuiListItemButton>
+      )}
+      {!clickable && (
         <ListItemText
           primary={primaryText}
           secondary={secondaryText}
         />
-      </MuiListItemButton>
+      )}
     </MuiListItem>
   );
 }

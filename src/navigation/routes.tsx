@@ -1,7 +1,7 @@
 import { Navigate, RouteObject } from 'react-router-dom';
 import App from '../App';
 import { DashboardLayout } from '../layouts';
-import { ClientsPage, TestPage2 } from '../pages';
+import { ClientDetailsPage, ClientsPage, TestPage2 } from '../pages';
 import { PLAYGROUND_ROUTES } from './playground-routes';
 
 export const ROUTES: RouteObject = {
@@ -18,6 +18,10 @@ export const ROUTES: RouteObject = {
         {
           path: '/clients',
           Component: ClientsPage,
+        },
+        {
+          path: '/clients/:clientId',
+          Component: ClientDetailsPage,
         },
         {
           path: '/test-page-2',
