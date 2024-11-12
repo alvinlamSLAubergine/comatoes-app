@@ -1,6 +1,7 @@
 export type Client = {
   id: number;
-  name: string;
+  firstName: string;
+  lastName: string;
   totalValue: number;
   plans: number; // number of plans
   lastUpdated: Date;
