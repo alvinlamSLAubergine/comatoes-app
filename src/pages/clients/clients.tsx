@@ -17,7 +17,7 @@ export const ClientsPage = () => {
       <List
         listItems={clients.map((client) => ({
           id: client.id.toString(),
-          primaryText: client.firstName,
+          primaryText: `${client.firstName} ${client.lastName}`,
           secondaryText: `${client.plans} Plans | ${getCurrencyFormat(client.totalValue)} | ${client.lastUpdated.toDateString()}`,
           avatar: client.avatar,
           onClick: (id) => {

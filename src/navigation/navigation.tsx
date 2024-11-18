@@ -1,5 +1,5 @@
 import TestPageTwoIcon from '@mui/icons-material/AssessmentTwoTone';
-import TestPageOneIcon from '@mui/icons-material/PeopleTwoTone';
+import ClientsIcon from '@mui/icons-material/PeopleTwoTone';
 import { Navigation } from '@toolpad/core';
 
 export const NAVIGATION: Navigation = [
@@ -10,7 +10,7 @@ export const NAVIGATION: Navigation = [
   {
     title: 'Clients',
     segment: 'clients',
-    icon: <TestPageOneIcon />,
+    icon: <ClientsIcon />,
     pattern: 'clients{/:clientId}*',
   },
   {

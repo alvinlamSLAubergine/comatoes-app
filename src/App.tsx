@@ -1,3 +1,4 @@
+import { DashboardLayout } from '@toolpad/core';
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import { Outlet } from 'react-router-dom';
 import { NAVIGATION } from './navigation';
@@ -20,7 +21,9 @@ function App() {
         title: 'Comatoes',
       }}
     >
-      <Outlet />
+      <DashboardLayout>
+        <Outlet />
+      </DashboardLayout>
     </AppProvider>
   );
 }
