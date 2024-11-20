@@ -2,7 +2,7 @@ import { Client } from '../../types';
 
 export const CLIENTS: Client[] = [
   {
-    id: 1,
+    id: '1',
     firstName: 'John',
     lastName: 'Doe',
     avatar: 'default',
@@ -11,7 +11,7 @@ export const CLIENTS: Client[] = [
     lastUpdated: new Date('2024-10-24T00:00:00Z'),
   },
   {
-    id: 2,
+    id: '2',
     firstName: 'Bob',
     lastName: 'Dylan',
     avatar: 'https://www.w3schools.com/howto/img_avatar.png',

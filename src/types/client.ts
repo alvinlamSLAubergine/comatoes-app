@@ -1,9 +1,9 @@
 export type Client = {
-  id: number;
+  id: string;
   firstName: string;
   lastName: string;
   totalValue: number;
-  plans: number; // number of plans
+  plans: number;
   lastUpdated: Date;
   avatar?: string;
 };
