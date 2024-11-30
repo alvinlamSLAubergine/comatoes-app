@@ -1,5 +1,6 @@
-import { PLANS } from './plans';
+import { getPlans } from '../database';
 
 export function getPlanById(id: string) {
-  return PLANS.find((plan) => plan.id === id);
+  const plans = getPlans();
+  return plans.find((plan) => plan.id === id);
 }

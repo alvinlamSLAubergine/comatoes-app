@@ -1,6 +1,6 @@
 import { Plan } from '../../types';
 
-export const PLANS: Plan[] = [
+export const DEFAULT_PLANS: Plan[] = [
   {
     id: 'johndoe-1',
     clientId: '1',

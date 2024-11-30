@@ -1,5 +1,6 @@
-import { CLIENTS } from './clients';
+import { getClients } from '../database';
 
 export function getClientById(id: string) {
-  return CLIENTS.find((client) => client.id === id);
+  const clients = getClients();
+  return clients.find((client) => client.id === id);
 }

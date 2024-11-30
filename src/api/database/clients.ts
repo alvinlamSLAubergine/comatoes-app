@@ -1,6 +1,6 @@
 import { Client } from '../../types';
 
-export const CLIENTS: Client[] = [
+export const DEFAULT_CLIENTS: Client[] = [
   {
     id: '1',
     firstName: 'John',

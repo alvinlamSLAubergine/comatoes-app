@@ -1,5 +1,6 @@
-import { PLANS } from './plans';
+import { getPlans } from '../database';
 
 export function getPlansByClientId(clientId: string) {
-  return PLANS.filter((plan) => plan.clientId === clientId);
+  const plans = getPlans();
+  return plans.filter((plan) => plan.clientId === clientId);
 }
