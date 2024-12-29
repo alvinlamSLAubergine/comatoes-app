@@ -2,6 +2,7 @@ import { PageContainer, useActivePage } from '@toolpad/core';
 import { useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import { getClientById } from '../../api';
+import { PlansTable } from './plans-table';
 
 export const ClientDetailsPage = () => {
   const id = useParams().clientId ?? '';
@@ -17,6 +18,8 @@ export const ClientDetailsPage = () => {
     <PageContainer
       breadcrumbs={breadcrumbs}
       title=''
-    ></PageContainer>
+    >
+      <PlansTable clientId={id} />
+    </PageContainer>
   );
 };
