@@ -1,4 +1,6 @@
-import { GridColDef } from '@mui/x-data-grid';
+import Confirm from '@mui/icons-material/Check';
+import Box from '@mui/material/Box';
+import { GridColDef, renderEditDateCell } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 import { getPlansByClientId } from '../../../api/plans/get-plans-by-client-id';
 import { Table } from '../../../components';
@@ -21,6 +23,7 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
       width: 200,
       valueGetter: (value) => getDateFormat(new Date(value)),
       editable: true,
+      renderEditCell: renderEditDateCell,
     },
     {
       field: 'lastUpdated',
@@ -28,6 +31,17 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
       width: 200,
       valueGetter: (value) => getDateFormat(new Date(value)),
       editable: true,
+    },
+    {
+      field: 'actions',
+      headerName: '',
+      width: 100,
+      editable: true,
+      renderEditCell: () => (
+        <Box>
+          <Confirm />
+        </Box>
+      ),
     },
   ];
 

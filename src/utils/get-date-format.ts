@@ -1,7 +1,6 @@
-import { isDate } from 'validator';
-
 export function getDateFormat(value: Date, format?: string) {
-  if (!isDate(value.toString())) {
+  const dateString = value.toDateString();
+  if (dateString === 'Invalid Date') {
     return 'Invalid Date';
   }
 
