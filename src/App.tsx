@@ -1,13 +1,14 @@
 import { DashboardLayout } from '@toolpad/core';
 import { AppProvider } from '@toolpad/core/react-router-dom';
 import { Outlet } from 'react-router-dom';
+import logo from '../public/comatoes.svg';
 import { initApi } from './api';
 import { NAVIGATION } from './navigation';
 import { theme } from './theme';
 
 const DashboardLogo = () => (
   <img
-    src='/comatoes.svg'
+    src={logo}
     alt='logo'
   />
 );
