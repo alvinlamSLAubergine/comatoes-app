@@ -8,14 +8,15 @@ declare module '@mui/x-data-grid' {
     onAdd: (newRow: GridValidRowModel) => void;
     setRowModesModel: (newModel: (oldModel: GridRowModesModel) => GridRowModesModel) => void;
     addLabel?: string;
+    newObject?: GridValidRowModel;
     generateId?: () => string;
   }
 }
 
-export function Toolbar({ onAdd, setRowModesModel, addLabel, generateId }: GridSlotProps['toolbar']) {
+export function Toolbar({ onAdd, setRowModesModel, addLabel, newObject, generateId }: GridSlotProps['toolbar']) {
   const handleClick = () => {
     const id = generateId ? generateId() : crypto.randomUUID();
-    onAdd({ id });
+    onAdd({ ...newObject, id });
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [id]: { mode: GridRowModes.Edit },

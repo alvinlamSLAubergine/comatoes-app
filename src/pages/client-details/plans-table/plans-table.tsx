@@ -1,5 +1,3 @@
-import Confirm from '@mui/icons-material/Check';
-import Box from '@mui/material/Box';
 import { GridColDef, renderEditDateCell } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 import { getPlansByClientId } from '../../../api/plans/get-plans-by-client-id';
@@ -30,18 +28,7 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
       headerName: 'Last Updated',
       width: 200,
       valueGetter: (value) => getDateFormat(new Date(value)),
-      editable: true,
-    },
-    {
-      field: 'actions',
-      headerName: '',
-      width: 100,
-      editable: true,
-      renderEditCell: () => (
-        <Box>
-          <Confirm />
-        </Box>
-      ),
+      editable: false,
     },
   ];
 
@@ -51,6 +38,17 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
       columns={columns}
       addToolbar={{
         addLabel: 'Add New Plan',
+        newObject: {
+          id: '',
+          clientId: clientId,
+          name: '',
+          createdOn: new Date(),
+          lastUpdated: new Date(),
+          description: '',
+          currentValue: 0,
+          recurringCashFlow: [],
+          cashFlow: [],
+        },
       }}
     />
   );

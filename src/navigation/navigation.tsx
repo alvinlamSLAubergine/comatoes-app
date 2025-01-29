@@ -14,7 +14,7 @@ export const NAVIGATION: Navigation = [
     pattern: '/clients{/:clientId}*',
   },
   {
-    title: 'Test Page 2',
+    title: 'Investment Calculator',
     segment: 'test-page-2',
     icon: <TestPageTwoIcon />,
   },
