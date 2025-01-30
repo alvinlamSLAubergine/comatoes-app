@@ -1,6 +1,7 @@
 import { GridColDef, renderEditDateCell } from '@mui/x-data-grid';
 import { useMemo } from 'react';
-import { getPlansByClientId } from '../../../api/plans/get-plans-by-client-id';
+import { getPlansByClientId } from '../../../api';
+import { postPlan } from '../../../api/plans';
 import { Table } from '../../../components';
 import { Plan } from '../../../types';
 import { getDateFormat } from '../../../utils';
@@ -38,6 +39,7 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
       columns={columns}
       addToolbar={{
         addLabel: 'Add New Plan',
+        handleAddConfirm: (newRow) => postPlan(newRow),
         newObject: {
           id: '',
           clientId: clientId,

@@ -63,3 +63,8 @@ export function getClients() {
 export function getPlans() {
   return plans;
 }
+
+export function addPlan(newPlan: Plan) {
+  plans.push(newPlan);
+  localStorage.setItem('plans', JSON.stringify(plans));
+}

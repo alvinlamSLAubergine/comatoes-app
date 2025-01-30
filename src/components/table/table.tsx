@@ -1,4 +1,4 @@
-import { GridColDef, GridRowModes, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
+import { GridColDef, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
 import { useMemo, useState } from 'react';
 import { ColumnStack } from '../stack/stack';
 import { generateColumns } from './columns';
@@ -10,6 +10,7 @@ interface AddToolbarProps<T extends GridValidRowModel> {
   generateId?: () => string;
   addLabel?: string;
   newObject?: T;
+  handleAddConfirm?: (newRow: T) => void;
 }
 
 interface TableProps<T extends GridValidRowModel> {
@@ -24,19 +25,8 @@ export function Table<T extends GridValidRowModel>({ data, columns, filters, add
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const _columns = useMemo(
-    () =>
-      generateColumns(columns, {
-        onAddConfirm: (id: string) => {
-          setRowModesModel((prev) => ({
-            ...prev,
-            [id]: { ...prev[id], mode: GridRowModes.View },
-          }));
-        },
-        onAddCancel: (id: string) => {
-          setRows((oldRows) => oldRows.filter((row) => row.id !== id));
-        },
-      }),
-    [columns, setRowModesModel, setRows],
+    () => generateColumns(columns, setRows, setRowModesModel, addToolbar?.handleAddConfirm),
+    [addToolbar, columns],
   );
 
   const onAdd = (newRow: GridValidRowModel) => {
@@ -50,7 +40,7 @@ export function Table<T extends GridValidRowModel>({ data, columns, filters, add
       {filters && <Filters />}
       <StyledTable<T>
         columns={_columns}
-        rows={rows}
+        rows={rows as T[]}
         editMode='row'
         rowModesModel={rowModesModel}
         disableRowSelectionOnClick

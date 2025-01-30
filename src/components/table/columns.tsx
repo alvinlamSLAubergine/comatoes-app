@@ -3,21 +3,38 @@ import CancelIcon from '@mui/icons-material/Close';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRowModes, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
+import { Dispatch, SetStateAction } from 'react';
 
-interface AddRowFuncs {
-  onAddConfirm: (id: string) => void;
-  onAddCancel: (id: string) => void;
-}
-
-export const generateColumns = (columns: GridColDef[], addRowFuncs?: AddRowFuncs): GridColDef[] => {
-  const _columns: GridColDef[] = columns.map((column) => ({
+export function generateColumns<T extends GridValidRowModel>(
+  columns: GridColDef<T>[],
+  setRows: Dispatch<SetStateAction<T[]>>,
+  setRowModesModel: Dispatch<SetStateAction<GridRowModesModel>>,
+  onAddConfirm?: (row: T) => void,
+) {
+  const _columns: GridColDef<T>[] = columns.map((column) => ({
     disableColumnMenu: true,
     sortable: false,
     ...column,
   }));
 
-  if (addRowFuncs) {
+  // If add row features are enabled:
+  if (onAddConfirm) {
+    const handleAddConfirm = (row: T) => {
+      // Set the specified row to view mode
+      setRowModesModel((prev) => ({
+        ...prev,
+        [row.id]: { ...prev[row.id], mode: GridRowModes.View },
+      }));
+
+      // Trigger the onAdd callback if it exists
+      onAddConfirm(row);
+    };
+
+    const handleAddCancel = (id: string) => {
+      setRows((oldRows) => oldRows.filter((row) => row.id !== id));
+    };
+
     _columns.push({
       field: 'actions',
       headerName: '',
@@ -28,12 +45,12 @@ export const generateColumns = (columns: GridColDef[], addRowFuncs?: AddRowFuncs
       renderEditCell: (params) => (
         <Box>
           <Tooltip title='Confirm'>
-            <IconButton onClick={() => addRowFuncs.onAddConfirm(params.row.id)}>
+            <IconButton onClick={() => handleAddConfirm(params.row)}>
               <ConfirmIcon />
             </IconButton>
           </Tooltip>
           <Tooltip title='Cancel'>
-            <IconButton onClick={() => addRowFuncs.onAddCancel(params.row.id)}>
+            <IconButton onClick={() => handleAddCancel(params.row.id)}>
               <CancelIcon />
             </IconButton>
           </Tooltip>
@@ -43,4 +60,4 @@ export const generateColumns = (columns: GridColDef[], addRowFuncs?: AddRowFuncs
   }
 
   return _columns;
-};
+}
