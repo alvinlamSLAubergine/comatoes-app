@@ -20,9 +20,9 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
       field: 'createdOn',
       headerName: 'Created Date',
       width: 200,
-      valueGetter: (value) => getDateFormat(new Date(value)),
+      valueFormatter: (value) => getDateFormat(new Date(value)),
       editable: true,
-      renderEditCell: renderEditDateCell,
+      renderEditCell: (params) => renderEditDateCell({ ...params, value: params.value }),
     },
     {
       field: 'lastUpdated',
