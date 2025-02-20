@@ -86,6 +86,13 @@ export function generateColumns<T extends GridRow>(
     }));
   };
 
+  const handleDelete = (row: T) => {
+    setRows((oldRows) => oldRows.filter((item) => item.id !== row.id));
+    if (onDeleteConfirm) {
+      onDeleteConfirm(row);
+    }
+  };
+
   const actionColumn: GridColDef<T> = {
     field: 'actions',
     headerName: '',
@@ -97,7 +104,7 @@ export function generateColumns<T extends GridRow>(
       <ActionColumn
         row={params.row}
         handleEdit={handleEdit}
-        handleDelete={() => {}}
+        handleDelete={handleDelete}
       />
     ),
     renderEditCell: (params) => (
