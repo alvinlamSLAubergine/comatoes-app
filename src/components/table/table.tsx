@@ -18,15 +18,32 @@ interface TableProps<T extends GridValidRowModel> {
   columns: GridColDef<T>[];
   filters?: boolean;
   addToolbar?: AddToolbarProps<T>;
+  handleEditConfirm?: (row: T) => void;
+  handleDeleteConfirm?: (row: T) => void;
 }
 
-export function Table<T extends GridValidRowModel>({ data, columns, filters, addToolbar }: TableProps<T>) {
+export function Table<T extends GridValidRowModel>({
+  data,
+  columns,
+  filters,
+  addToolbar,
+  handleEditConfirm,
+  handleDeleteConfirm,
+}: TableProps<T>) {
   const [rows, setRows] = useState<T[]>(data);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
 
   const _columns = useMemo(
-    () => generateColumns(columns, setRows, setRowModesModel, addToolbar?.handleAddConfirm),
-    [addToolbar, columns],
+    () =>
+      generateColumns(
+        columns,
+        setRows,
+        setRowModesModel,
+        addToolbar?.handleAddConfirm,
+        handleEditConfirm,
+        handleDeleteConfirm,
+      ),
+    [addToolbar?.handleAddConfirm, columns, handleDeleteConfirm, handleEditConfirm],
   );
 
   const onAdd = (newRow: GridValidRowModel) => {

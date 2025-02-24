@@ -68,3 +68,15 @@ export function addPlan(newPlan: Plan) {
   plans.push(newPlan);
   localStorage.setItem('plans', JSON.stringify(plans));
 }
+
+export function updatePlan(updatedPlan: Plan) {
+  const index = plans.findIndex((plan) => plan.id === updatedPlan.id);
+  plans[index] = updatedPlan;
+  localStorage.setItem('plans', JSON.stringify(plans));
+}
+
+export function deletePlan(id: string) {
+  const index = plans.findIndex((plan) => plan.id === id);
+  plans.splice(index, 1);
+  localStorage.setItem('plans', JSON.stringify(plans));
+}

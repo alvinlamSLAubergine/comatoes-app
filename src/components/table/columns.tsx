@@ -86,7 +86,7 @@ export function generateColumns<T extends GridRow>(
     }));
   };
 
-  const handleDelete = (row: T) => {
+  const handleDeleteConfirm = (row: T) => {
     setRows((oldRows) => oldRows.filter((item) => item.id !== row.id));
     if (onDeleteConfirm) {
       onDeleteConfirm(row);
@@ -104,7 +104,7 @@ export function generateColumns<T extends GridRow>(
       <ActionColumn
         row={params.row}
         handleEdit={handleEdit}
-        handleDelete={handleDelete}
+        handleDelete={handleDeleteConfirm}
       />
     ),
     renderEditCell: (params) => (
