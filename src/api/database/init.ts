@@ -3,12 +3,12 @@
 // It will check whether the browser has the API data in local storage
 // If local storage does not contain "version" field or if "version" field is different,
 
-import { Client, Plan, PlanCashFlow, PlanRecurringCashFlow } from '../../types';
+import { Client, Plan } from '../../types';
 
 import { DEFAULT_CLIENTS } from './clients';
 import { DEFAULT_PLANS } from './plans';
 
-const VERSION = '0.0.2';
+const VERSION = '0.0.3';
 
 function clientReviver(key: string, value: unknown) {
   if (key === 'lastUpdated') {
@@ -18,21 +18,8 @@ function clientReviver(key: string, value: unknown) {
 }
 
 function planReviver(key: string, value: unknown) {
-  if (key === 'recurringCashFlow') {
-    const _value = value as PlanRecurringCashFlow[];
-    return _value.map((item) => ({
-      ...item,
-      createdOn: new Date(item.createdOn),
-      startDate: item.startDate ? new Date(item.startDate) : undefined,
-      endDate: item.endDate ? new Date(item.endDate) : undefined,
-    }));
-  }
-  if (key === 'cashFlow') {
-    const _value = value as PlanCashFlow[];
-    return _value.map((item) => ({
-      ...item,
-      createdOn: new Date(item.createdOn),
-    }));
+  if (key === 'createdOn' || key === 'startDate' || key === 'endDate' || key === 'lastUpdated') {
+    return new Date(String(value));
   }
   return value;
 }
@@ -64,14 +51,14 @@ export function getPlans() {
   return plans;
 }
 
-export function addPlan(newPlan: Plan) {
-  plans.push(newPlan);
+export function addPlan(newPlan: Omit<Plan, 'lastUpdated'>) {
+  plans.push({ ...newPlan, lastUpdated: new Date() });
   localStorage.setItem('plans', JSON.stringify(plans));
 }
 
-export function updatePlan(updatedPlan: Plan) {
+export function updatePlan(updatedPlan: Omit<Plan, 'lastUpdated'>) {
   const index = plans.findIndex((plan) => plan.id === updatedPlan.id);
-  plans[index] = updatedPlan;
+  plans[index] = { ...updatedPlan, lastUpdated: new Date() };
   localStorage.setItem('plans', JSON.stringify(plans));
 }
 

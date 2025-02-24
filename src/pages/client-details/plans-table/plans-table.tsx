@@ -1,10 +1,9 @@
-import { GridColDef, renderEditDateCell } from '@mui/x-data-grid';
 import { useMemo } from 'react';
 import { getPlansByClientId } from '../../../api';
 import { deletePlan, patchPlan, postPlan } from '../../../api/plans';
 import { Table } from '../../../components';
-import { Plan } from '../../../types';
-import { getDateFormat } from '../../../utils';
+import { PaymentMode, Plan } from '../../../types';
+import { getColumns } from './plans-columns';
 
 interface PlansTableProps {
   clientId: string;
@@ -13,30 +12,10 @@ interface PlansTableProps {
 export const PlansTable = ({ clientId }: PlansTableProps) => {
   const plans = useMemo(() => getPlansByClientId(clientId), [clientId]);
 
-  const columns: GridColDef<Plan>[] = [
-    { field: 'id', headerName: 'ID', width: 100 },
-    { field: 'name', headerName: 'Name', flex: 1, editable: true },
-    {
-      field: 'createdOn',
-      headerName: 'Created Date',
-      width: 200,
-      valueFormatter: (value) => getDateFormat(new Date(value)),
-      editable: true,
-      renderEditCell: (params) => renderEditDateCell({ ...params, value: params.value }),
-    },
-    {
-      field: 'lastUpdated',
-      headerName: 'Last Updated',
-      width: 200,
-      valueGetter: (value) => getDateFormat(new Date(value)),
-      editable: false,
-    },
-  ];
-
   return (
     <Table<Plan>
       data={plans}
-      columns={columns}
+      columns={getColumns()}
       handleDeleteConfirm={(row) => deletePlan(row.id)}
       handleEditConfirm={(row) => patchPlan({ ...row, lastUpdated: new Date() })}
       addToolbar={{
@@ -44,14 +23,16 @@ export const PlansTable = ({ clientId }: PlansTableProps) => {
         handleAddConfirm: (newRow) => postPlan(newRow),
         newObject: {
           id: '',
-          clientId: clientId,
+          clientId,
           name: '',
           createdOn: new Date(),
+          startDate: new Date(),
           lastUpdated: new Date(),
-          description: '',
           currentValue: 0,
-          recurringCashFlow: [],
-          cashFlow: [],
+          amount: 0,
+          paymentMode: PaymentMode.CASH,
+          paymentFrequency: 'single',
+          endDate: new Date(),
         },
       }}
     />
