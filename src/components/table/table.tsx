@@ -1,4 +1,4 @@
-import { GridColDef, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid';
+import { GridColDef, GridRowModesModel, GridValidRowModel } from '@mui/x-data-grid-pro';
 import { useMemo, useState } from 'react';
 import { ColumnStack } from '../stack/stack';
 import { generateColumns } from './columns';
@@ -67,6 +67,7 @@ export function Table<T extends GridValidRowModel>({
         slots={{ toolbar }}
         slotProps={{ toolbar: { onAdd, setRowModesModel, ...addToolbar } }}
         onRowClick={(params) => onRowClick(params.row)}
+        initialState={{ pinnedColumns: { right: ['actions'] } }}
       />
     </ColumnStack>
   );

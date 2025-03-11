@@ -1,4 +1,4 @@
-import { GridColDef, renderEditDateCell, renderEditInputCell } from '@mui/x-data-grid';
+import { GridColDef, renderEditDateCell, renderEditInputCell } from '@mui/x-data-grid-pro';
 import { Plan } from '../../../types';
 import { getCurrencyFormat, getDateFormat, monthDiff, yearDiff } from '../../../utils';
 

@@ -1,8 +1,8 @@
 import { colors } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { DataGrid, gridClasses } from '@mui/x-data-grid';
+import { DataGridPro, gridClasses } from '@mui/x-data-grid-pro';
 
-export const StyledTable = styled(DataGrid)(({ theme }) => ({
+export const StyledTable = styled(DataGridPro)(({ theme }) => ({
   // prevent cell border when clicking on header cells
   [`& .${gridClasses.columnHeader}:focus, & .${gridClasses.columnHeader}:focus-within`]: {
     outline: 'none',
@@ -19,4 +19,4 @@ export const StyledTable = styled(DataGrid)(({ theme }) => ({
   [`& .${gridClasses.toolbarContainer}`]: {
     backgroundColor: theme.palette.primary.light,
   },
-})) as typeof DataGrid;
+})) as typeof DataGridPro;

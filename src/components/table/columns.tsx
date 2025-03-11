@@ -1,4 +1,4 @@
-import { GridColDef, GridRowModes, GridRowModesModel } from '@mui/x-data-grid';
+import { GridColDef, GridRowModes, GridRowModesModel } from '@mui/x-data-grid-pro';
 import { Dispatch, SetStateAction } from 'react';
 import { GridRow } from '../../types/table';
 import { ActionColumn, ActionColumnEdit } from './action-column';

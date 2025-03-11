@@ -1,10 +1,10 @@
 import AddIcon from '@mui/icons-material/Add';
 import Button from '@mui/material/Button';
 import MuiToolbar from '@mui/material/Toolbar';
-import { GridRowModes, GridRowModesModel, GridSlotProps } from '@mui/x-data-grid';
+import { GridRowModes, GridRowModesModel, GridSlotProps } from '@mui/x-data-grid-pro';
 import { GridRow } from '../../types/table';
 
-declare module '@mui/x-data-grid' {
+declare module '@mui/x-data-grid-pro' {
   interface ToolbarPropsOverrides {
     onAdd: (newRow: GridRow) => void;
     setRowModesModel: (newModel: (oldModel: GridRowModesModel) => GridRowModesModel) => void;
