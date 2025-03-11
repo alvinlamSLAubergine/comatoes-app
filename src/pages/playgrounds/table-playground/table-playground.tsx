@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { GridColDef, GridValidRowModel } from '@mui/x-data-grid';
+import { GridColDef, GridValidRowModel } from '@mui/x-data-grid-pro';
 import { Table } from '../../../components';
 
 interface Client extends GridValidRowModel {
