@@ -17,12 +17,24 @@ export function generateColumns<T extends GridRow>(
     ...column,
   }));
 
+  const updateRow = (row: T) => {
+    setRows((oldRows) => {
+      const index = oldRows.findIndex((item) => item.id === row.id);
+      if (index !== -1) {
+        return [...oldRows.slice(0, index), row, ...oldRows.slice(index + 1)];
+      }
+      return oldRows;
+    });
+  };
+
   const handleAddConfirm = (row: T) => {
     // Set the specified row to view mode
     setRowModesModel((prev) => ({
       ...prev,
       [row.id]: { ...prev[row.id], mode: GridRowModes.View },
     }));
+
+    updateRow({ ...row, mode: undefined });
 
     // Trigger the onAdd callback if it exists
     if (onAddConfirm) {
@@ -39,10 +51,12 @@ export function generateColumns<T extends GridRow>(
     // Set the specified row to view mode
     setRowModesModel((prev) => ({
       ...prev,
-      [row.id]: { ...prev[row.id], mode: GridRowModes.View },
+      [row.id]: { mode: GridRowModes.View },
     }));
 
-    // Trigger the onAdd callback if it exists
+    updateRow({ ...row, mode: undefined });
+
+    // Trigger the onEdit callback if it exists
     if (onEditConfirm) {
       onEditConfirm(row);
     }
@@ -52,8 +66,10 @@ export function generateColumns<T extends GridRow>(
     // Set the specified row to view mode
     setRowModesModel((prev) => ({
       ...prev,
-      [id]: { ...prev[id], mode: GridRowModes.View },
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
     }));
+
+    setRows((oldRows) => oldRows.map((row) => (row.id === id ? { ...row, mode: undefined } : row)));
   };
 
   const handleConfirm = (row: T) => {
@@ -73,13 +89,7 @@ export function generateColumns<T extends GridRow>(
   };
 
   const handleEdit = (row: T) => {
-    setRows((oldRows) => {
-      const editedRow = oldRows.find((item) => item.id === row.id);
-      if (editedRow) {
-        editedRow.mode = 'edit';
-      }
-      return oldRows;
-    });
+    updateRow({ ...row, mode: 'edit' });
     setRowModesModel((oldModel) => ({
       ...oldModel,
       [row.id]: { mode: GridRowModes.Edit },
