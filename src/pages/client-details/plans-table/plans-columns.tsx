@@ -1,6 +1,6 @@
 import { GridColDef, renderEditDateCell, renderEditInputCell } from '@mui/x-data-grid';
 import { Plan } from '../../../types';
-import { getDateFormat, monthDiff } from '../../../utils';
+import { getCurrencyFormat, getDateFormat, monthDiff, yearDiff } from '../../../utils';
 
 export const getColumns = (): GridColDef<Plan>[] => [
   { field: 'name', headerName: 'Plan Name', width: 300, editable: true },
@@ -17,6 +17,7 @@ export const getColumns = (): GridColDef<Plan>[] => [
     headerName: 'Amount',
     width: 120,
     editable: true,
+    valueFormatter: (value) => getCurrencyFormat(value),
     renderEditCell: (params) => renderEditInputCell({ ...params, type: 'number' }),
   },
   {
@@ -54,7 +55,7 @@ export const getColumns = (): GridColDef<Plan>[] => [
     field: 'totalCapital',
     headerName: 'Total Capital',
     width: 120,
-    valueFormatter: (_, row) => calculateTotalCapital(row),
+    valueFormatter: (_, row) => getCurrencyFormat(calculateTotalCapital(row)),
     editable: false,
   },
   {
@@ -62,6 +63,7 @@ export const getColumns = (): GridColDef<Plan>[] => [
     headerName: 'Current Value',
     width: 120,
     editable: true,
+    valueFormatter: (value) => getCurrencyFormat(value),
     renderEditCell: (params) => renderEditInputCell({ ...params, type: 'number' }),
   },
   {
@@ -84,16 +86,14 @@ const calculateRoi = (plan: Plan) => {
 };
 
 const calculateTotalCapital = (plan: Plan) => {
-  const { paymentFrequency, startDate, endDate } = plan;
-  const lastPaymentDate = Date.now() < endDate.getTime() ? new Date() : endDate;
-
-  const totalMonths = monthDiff(startDate, lastPaymentDate);
+  const { paymentFrequency, startDate, endDate, lastUpdated } = plan;
+  const lastPaymentDate = lastUpdated.getTime() < endDate.getTime() ? lastUpdated : endDate;
 
   if (paymentFrequency === 'single') {
     return plan.amount;
   } else if (paymentFrequency === 'monthly') {
-    return plan.amount * totalMonths;
+    return plan.amount * monthDiff(startDate, lastPaymentDate);
   } else {
-    return plan.amount * (Math.floor(totalMonths / 12) + 1);
+    return plan.amount * yearDiff(startDate, lastPaymentDate);
   }
 };

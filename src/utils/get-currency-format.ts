@@ -5,5 +5,6 @@ export function getCurrencyFormat(value: number, format?: string, currency?: str
   return new Intl.NumberFormat(_format, {
     style: 'currency',
     currency: _currency,
+    currencyDisplay: 'narrowSymbol',
   }).format(value);
 }

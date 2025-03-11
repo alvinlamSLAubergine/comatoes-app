@@ -53,13 +53,11 @@ export function getPlans() {
 
 export function addPlan(newPlan: Omit<Plan, 'lastUpdated'>) {
   plans = [...plans, { ...newPlan, lastUpdated: new Date() }];
-  console.log('add plan', newPlan);
   localStorage.setItem('plans', JSON.stringify(plans));
 }
 
 export function updatePlan(updatedPlan: Omit<Plan, 'lastUpdated'>) {
   plans = plans.map((plan) => (plan.id === updatedPlan.id ? { ...updatedPlan, lastUpdated: new Date() } : plan));
-  console.log(plans);
   localStorage.setItem('plans', JSON.stringify(plans));
 }
 
