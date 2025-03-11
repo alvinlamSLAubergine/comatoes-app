@@ -20,6 +20,7 @@ interface TableProps<T extends GridValidRowModel> {
   addToolbar?: AddToolbarProps<T>;
   handleEditConfirm?: (row: T) => void;
   handleDeleteConfirm?: (row: T) => void;
+  onRowClick?: (row: T) => void;
 }
 
 export function Table<T extends GridValidRowModel>({
@@ -29,6 +30,7 @@ export function Table<T extends GridValidRowModel>({
   addToolbar,
   handleEditConfirm,
   handleDeleteConfirm,
+  onRowClick = () => {},
 }: TableProps<T>) {
   const [rows, setRows] = useState<T[]>(data);
   const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
@@ -64,6 +66,7 @@ export function Table<T extends GridValidRowModel>({
         disableMultipleRowSelection
         slots={{ toolbar }}
         slotProps={{ toolbar: { onAdd, setRowModesModel, ...addToolbar } }}
+        onRowClick={(params) => onRowClick(params.row)}
       />
     </ColumnStack>
   );

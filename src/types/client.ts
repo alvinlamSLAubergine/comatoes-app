@@ -5,5 +5,6 @@ export type Client = {
   totalValue: number;
   plans: number;
   lastUpdated: Date;
+  createdOn: Date;
   avatar?: string;
 };

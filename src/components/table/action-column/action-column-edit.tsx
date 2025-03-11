@@ -15,12 +15,22 @@ export function ActionColumnEdit<T extends GridRow>({ row, handleCancel, handleC
   return (
     <Box>
       <Tooltip title='Confirm'>
-        <IconButton onClick={() => handleConfirm(row)}>
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            handleConfirm(row);
+          }}
+        >
           <ConfirmIcon />
         </IconButton>
       </Tooltip>
       <Tooltip title='Cancel'>
-        <IconButton onClick={() => handleCancel(row)}>
+        <IconButton
+          onClick={(e) => {
+            e.stopPropagation();
+            handleCancel(row);
+          }}
+        >
           <CancelIcon />
         </IconButton>
       </Tooltip>

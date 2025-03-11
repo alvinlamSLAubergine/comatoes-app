@@ -31,14 +31,24 @@ export function ActionColumn<T extends GridRow>({ row, handleEdit, handleDelete 
       />
       {handleEdit && (
         <Tooltip title='Edit'>
-          <IconButton onClick={() => handleEdit(row)}>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit(row);
+            }}
+          >
             <EditIcon />
           </IconButton>
         </Tooltip>
       )}
       {handleDelete && (
         <Tooltip title='Delete'>
-          <IconButton onClick={() => setDeleteOpen(true)}>
+          <IconButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setDeleteOpen(true);
+            }}
+          >
             <DeleteIcon />
           </IconButton>
         </Tooltip>

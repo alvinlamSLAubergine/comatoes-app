@@ -9,6 +9,7 @@ export const DEFAULT_CLIENTS: Client[] = [
     totalValue: 133000,
     plans: 2,
     lastUpdated: new Date('2024-10-24T00:00:00Z'),
+    createdOn: new Date('2024-10-24T00:00:00Z'),
   },
   {
     id: '2',
@@ -18,5 +19,6 @@ export const DEFAULT_CLIENTS: Client[] = [
     totalValue: 1000,
     plans: 1,
     lastUpdated: new Date('2024-10-24T00:00:00Z'),
+    createdOn: new Date('2024-10-24T00:00:00Z'),
   },
 ];

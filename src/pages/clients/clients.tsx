@@ -1,30 +1,13 @@
 import { PageContainer } from '@toolpad/core';
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getClients } from '../../api';
-import { List } from '../../components';
-import { getCurrencyFormat } from '../../utils';
+import { ClientsTable } from './clients-table/clients-table';
 
 export const ClientsPage = () => {
-  const navigate = useNavigate();
-  const clients = useMemo(() => getClients(), []);
-
   return (
     <PageContainer
       breadcrumbs={[]}
       title=''
     >
-      <List
-        listItems={clients.map((client) => ({
-          id: client.id.toString(),
-          primaryText: `${client.firstName} ${client.lastName}`,
-          secondaryText: `${client.plans} Plans | ${getCurrencyFormat(client.totalValue)} | ${client.lastUpdated.toDateString()}`,
-          avatar: client.avatar,
-          onClick: (id) => {
-            navigate(`/clients/${id}`);
-          },
-        }))}
-      />
+      <ClientsTable />
     </PageContainer>
   );
 };

@@ -8,10 +8,10 @@ import { Client, Plan } from '../../types';
 import { DEFAULT_CLIENTS } from './clients';
 import { DEFAULT_PLANS } from './plans';
 
-const VERSION = '0.0.3';
+const VERSION = '0.0.4';
 
 function clientReviver(key: string, value: unknown) {
-  if (key === 'lastUpdated') {
+  if (key === 'lastUpdated' || key === 'createdOn') {
     return new Date(String(value));
   }
   return value;
@@ -52,18 +52,35 @@ export function getPlans() {
 }
 
 export function addPlan(newPlan: Omit<Plan, 'lastUpdated'>) {
-  plans.push({ ...newPlan, lastUpdated: new Date() });
+  plans = [...plans, { ...newPlan, lastUpdated: new Date() }];
   localStorage.setItem('plans', JSON.stringify(plans));
 }
 
 export function updatePlan(updatedPlan: Omit<Plan, 'lastUpdated'>) {
-  const index = plans.findIndex((plan) => plan.id === updatedPlan.id);
-  plans[index] = { ...updatedPlan, lastUpdated: new Date() };
+  plans = plans.map((plan) => (plan.id === updatedPlan.id ? { ...updatedPlan, lastUpdated: new Date() } : plan));
   localStorage.setItem('plans', JSON.stringify(plans));
 }
 
 export function deletePlan(id: string) {
-  const index = plans.findIndex((plan) => plan.id === id);
-  plans.splice(index, 1);
+  plans = plans.filter((plan) => plan.id !== id);
   localStorage.setItem('plans', JSON.stringify(plans));
+}
+
+export function addClient(newClient: Omit<Client, 'lastUpdated' | 'createdOn'>) {
+  clients = [...clients, { ...newClient, lastUpdated: new Date(), createdOn: new Date() }];
+  localStorage.setItem('clients', JSON.stringify(clients));
+}
+
+export function updateClient(updatedClient: Omit<Client, 'lastUpdated'>) {
+  const index = clients.findIndex((client) => client.id === updatedClient.id);
+  clients = clients.map((client) =>
+    client.id === updatedClient.id ? { ...updatedClient, lastUpdated: new Date() } : client,
+  );
+  clients[index] = { ...updatedClient, lastUpdated: new Date() };
+  localStorage.setItem('clients', JSON.stringify(clients));
+}
+
+export function deleteClient(id: string) {
+  clients = clients.filter((client) => client.id !== id);
+  localStorage.setItem('clients', JSON.stringify(clients));
 }
