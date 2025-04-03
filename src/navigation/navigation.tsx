@@ -9,9 +9,9 @@ export const NAVIGATION: Navigation = [
   },
   {
     title: 'Clients',
-    segment: '/clients',
+    segment: 'clients',
     icon: <ClientsIcon />,
-    pattern: '/clients{/:clientId}*',
+    pattern: 'clients{/:clientId}*',
   },
   {
     title: 'Investment Calculator',

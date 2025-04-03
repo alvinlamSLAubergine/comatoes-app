@@ -10,7 +10,10 @@ export const ClientDetailsPage = () => {
   const clientName = `${client?.firstName} ${client?.lastName}`;
 
   return (
-    <PageContainer title={clientName}>
+    <PageContainer
+      breadcrumbs={[]}
+      title={clientName}
+    >
       <PlansTable clientId={id} />
     </PageContainer>
   );
