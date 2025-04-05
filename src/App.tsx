@@ -1,5 +1,5 @@
 import { DashboardLayout } from '@toolpad/core';
-import { AppProvider } from '@toolpad/core/react-router-dom';
+import { AppProvider } from '@toolpad/core/AppProvider';
 import { Outlet } from 'react-router-dom';
 import { initApi } from './api';
 import logo from './assets/comatoes.svg';
