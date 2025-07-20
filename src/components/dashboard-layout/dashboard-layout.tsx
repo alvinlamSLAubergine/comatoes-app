@@ -1,66 +1,54 @@
-import ExpandDrawer from '@mui/icons-material/MenuOpen';
-import { IconButton, Typography } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
+import { useMediaQuery } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
+import { useTheme } from '@mui/material/styles';
 import Toolbar from '@mui/material/Toolbar';
-import { PropsWithChildren } from 'react';
-import logo from '../../assets/comatoes.svg';
-import { NAV_SECTION_LABELS } from '../../constants';
+import { PropsWithChildren, useEffect, useState } from 'react';
+import { NAV_SECTION_ICONS, NAV_SECTION_LABELS } from '../../constants';
 import { NavSection } from '../../types';
+import { AppBar } from './app-bar';
 import { DrawerItem } from './drawer-item';
 
 interface DashboardLayoutProps extends PropsWithChildren {
   activeSection: NavSection;
   onNavSectionClick?: (section: NavSection) => void;
-  drawerWidth?: number;
+  drawerOpenWidth?: number;
+  drawerCloseWidth?: number;
   appBarHeight?: number;
 }
-
-const DashboardLogo = () => (
-  <img
-    src={logo}
-    alt='logo'
-    style={{ height: '40px', marginRight: '16px' }}
-  />
-);
 
 export const DashboardLayout = ({
   children,
   activeSection,
   onNavSectionClick,
-  drawerWidth = 200,
+  drawerOpenWidth = 240,
+  drawerCloseWidth = 64,
   appBarHeight = 64,
 }: DashboardLayoutProps) => {
+  const theme = useTheme();
+  const isSizeSm = useMediaQuery(theme.breakpoints.down('sm'));
+  const isSizeMd = useMediaQuery(theme.breakpoints.down('md'));
+
+  const [drawerOpen, setDrawerOpen] = useState(isSizeMd ? false : true);
+
+  // Update drawer state based on screen size
+  useEffect(() => {
+    setDrawerOpen(!isSizeMd);
+  }, [isSizeMd]);
+
+  const drawerWidth = drawerOpen ? drawerOpenWidth : drawerCloseWidth;
+
   return (
     <Box sx={{ display: 'flex' }}>
       <AppBar
-        position='fixed'
-        color='transparent'
-        sx={{
-          zIndex: (theme) => theme.zIndex.drawer + 1,
-          boxShadow: 'none',
-          borderBottom: (theme) => `1px solid ${theme.palette.divider}`,
-          height: `${appBarHeight}px`,
-        }}
-      >
-        <Toolbar>
-          <IconButton sx={{ marginRight: 2 }}>
-            <ExpandDrawer />
-          </IconButton>
-          <DashboardLogo />
-          <Typography
-            variant='h5'
-            fontWeight={600}
-            color='primary'
-          >
-            Comatoes
-          </Typography>
-        </Toolbar>
-      </AppBar>
+        appBarHeight={appBarHeight}
+        isDrawerOpen={drawerOpen}
+        onDrawerToggle={() => setDrawerOpen((prev) => !prev)}
+      />
       <Drawer
-        variant='permanent'
+        variant={isSizeSm ? 'temporary' : 'permanent'}
+        open={drawerOpen}
         sx={{
           width: drawerWidth,
           flexShrink: 0,
@@ -75,8 +63,10 @@ export const DashboardLayout = ({
           {Object.values(NavSection).map((section) => (
             <DrawerItem
               key={section}
+              icon={NAV_SECTION_ICONS[section]}
               label={NAV_SECTION_LABELS[section]}
               selected={activeSection === section}
+              drawerOpen={drawerOpen}
               onClick={() => onNavSectionClick?.(section)}
             />
           ))}
