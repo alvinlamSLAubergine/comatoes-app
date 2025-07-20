@@ -1,10 +1,11 @@
-import { DashboardLayout } from '@toolpad/core';
 import { AppProvider } from '@toolpad/core/AppProvider';
 import { Outlet } from 'react-router-dom';
 import { initApi } from './api';
 import logo from './assets/comatoes.svg';
+import { DashboardLayout } from './components';
 import { NAVIGATION } from './navigation';
 import { theme } from './theme';
+import { NavSection } from './types';
 
 const DashboardLogo = () => (
   <img
@@ -17,6 +18,7 @@ function App() {
   // init API
   initApi();
 
+  // TODO: Decomission Toolpad and AppProvider
   return (
     <AppProvider
       theme={theme}
@@ -26,7 +28,7 @@ function App() {
         title: 'Comatoes',
       }}
     >
-      <DashboardLayout>
+      <DashboardLayout activeSection={NavSection.clients}>
         <Outlet />
       </DashboardLayout>
     </AppProvider>
