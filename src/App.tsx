@@ -1,18 +1,8 @@
-import { AppProvider } from '@toolpad/core/AppProvider';
-import { Outlet } from 'react-router-dom';
 import { initApi } from './api';
-import logo from './assets/comatoes.svg';
 import { DashboardLayout } from './components';
-import { NAVIGATION } from './navigation';
-import { theme } from './theme';
+import { NavigationProvider, useNavigation } from './navigation';
+import { ClientsPage, TestPage2 } from './pages';
 import { NavSection } from './types';
-
-const DashboardLogo = () => (
-  <img
-    src={logo}
-    alt='logo'
-  />
-);
 
 function App() {
   // init API
@@ -20,19 +10,28 @@ function App() {
 
   // TODO: Decomission Toolpad and AppProvider
   return (
-    <AppProvider
-      theme={theme}
-      navigation={NAVIGATION}
-      branding={{
-        logo: <DashboardLogo />,
-        title: 'Comatoes',
-      }}
-    >
-      <DashboardLayout activeSection={NavSection.clients}>
-        <Outlet />
-      </DashboardLayout>
-    </AppProvider>
+    <NavigationProvider>
+      <AppDashboard />
+    </NavigationProvider>
   );
 }
+
+const AppDashboard = () => {
+  const { activeSection, updateActiveSection } = useNavigation();
+
+  const activeSectionPage = {
+    [NavSection.clients]: <ClientsPage />,
+    [NavSection.calculator]: <TestPage2 />,
+  }[activeSection];
+
+  return (
+    <DashboardLayout
+      activeSection={activeSection}
+      onNavSectionClick={updateActiveSection}
+    >
+      {activeSectionPage}
+    </DashboardLayout>
+  );
+};
 
 export default App;
